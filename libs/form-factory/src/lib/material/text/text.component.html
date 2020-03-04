@@ -1,0 +1,7 @@
+<ng-container *ngIf="schema">
+  <mat-form-field>
+    <mat-label *ngIf="schema.label">{{ schema.label }}</mat-label>
+    <input matInput [formControl]="form" [placeholder]="schema.placeholder" />
+    <mat-hint *ngIf="schema.hint">{{ schema.hint }}</mat-hint>
+  </mat-form-field>
+</ng-container>

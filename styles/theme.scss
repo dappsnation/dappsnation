@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+@import './themes/dark';
+@import './themes/light';
+@import './typography.scss';
+
+
+@include mat-core($typography);
+
+// COMPONENT THEMES
+@mixin material-theme($theme) {}
+
+// LIGHT THEME (default)
+@include angular-material-theme($light-theme);
+@include material-theme($light-theme);
+
+// DARK THEME
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include material-theme($dark-theme);
+}

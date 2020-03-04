@@ -10,5 +10,18 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "form-factory": {
+      "tags": [
+        "form",
+        "generator"
+      ]
+    },
+    "form-factory-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "form-factory"
+      ]
+    }
+  }
 }

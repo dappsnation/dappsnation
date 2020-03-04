@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Theme with variables
+@import './theme.scss';
+
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+// Apply space of 8px between span & icon everywhere
+.mat-icon + span,
+span + .mat-icon {
+  margin-left: 8px;
+}
+
+a {
+  text-decoration: none;
+}
+

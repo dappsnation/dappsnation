@@ -1,7 +1,128 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "form-factory": {
+      "projectType": "library",
+      "root": "libs/form-factory",
+      "sourceRoot": "libs/form-factory/src",
+      "prefix": "dappsnation",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/form-factory/tsconfig.lib.json",
+            "project": "libs/form-factory/ng-package.json",
+            "styles": ["styles/style.scss"]
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/form-factory/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/form-factory/tsconfig.lib.json",
+              "libs/form-factory/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/form-factory/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/form-factory/jest.config.js",
+            "tsConfig": "libs/form-factory/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/form-factory/src/test-setup.ts"
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/form-factory/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/form-factory",
+            "config": {
+              "configFolder": "libs/form-factory/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "form-factory-e2e": {
+      "root": "apps/form-factory-e2e",
+      "sourceRoot": "apps/form-factory-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/form-factory-e2e/cypress.json",
+            "tsConfig": "apps/form-factory-e2e/tsconfig.e2e.json",
+            "devServerTarget": "form-factory:storybook"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "form-factory:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/form-factory-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/form-factory-e2e/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "form-factory"
 }

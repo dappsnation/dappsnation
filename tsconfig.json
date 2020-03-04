@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@dappsnation/form-factory": ["libs/form-factory/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
