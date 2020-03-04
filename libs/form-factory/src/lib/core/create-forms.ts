@@ -1,8 +1,10 @@
-import { FormSchema, FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema } from "./types";
+import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm, FormSchema } from "./types";
 import { GetEntity, FormArraySchema, GetItem } from './types';
 import { FormControl } from '@angular/forms';
 import { FormEntity, EntityContols } from './entity';
 import { FormList, getFactory } from './list';
+
+type GetArrayType<T> = T extends (infer I)[] ? I : never;
 
 /** 
  * Create a Form (FormList, FormEntity, FormField) based on a form schema
@@ -10,20 +12,20 @@ import { FormList, getFactory } from './list';
  * @param schema Schema of the form
  * @param value The value to initialize the control with
  */
-export function createForms<Schema extends FormSchema>(schema: Schema, value: any) {
+export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, value: T): GetForm<Schema> {
   if (isControlSchema(schema)) {
-    return new FormControl(value);
+    return new FormControl(value) as any;
   }
-  if (isGroupSchema(schema)) {
+  if (isGroupSchema<T>(schema)) {
     const factory = (key: string, content: any) => createForms(schema.controls[key], content);
-    return FormEntity.factory(schema, value, factory as any);
+    return FormEntity.factory(schema as any, value, factory as any) as any;
   }
-  if (isArraySchema(schema)) {
-    const factory = (item: any) => {
-      const factorySchema = getFactory(schema, item)
+  if (isArraySchema<GetArrayType<T>>(schema)) {
+    const factory = (item: GetArrayType<T>) => {
+      const factorySchema = getFactory(schema, item);
       return createForms(factorySchema, item);
     }
-    return FormList.factory(schema, value, factory);
+    return FormList.factory(schema as any, value as any, factory as any) as any;
   }
 }
 

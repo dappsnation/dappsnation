@@ -2,13 +2,13 @@ import { Component, NgModule, Injector, Inject, Optional, ChangeDetectorRef, Inp
 import { CommonModule } from '@angular/common';
 import { AbstractControl } from '@angular/forms';
 import { ControlBase } from './control';
-import { FormEntityComponent } from './entity/entity.component';
+import { EntityBase } from './entity';
 import { ListBase } from './list';
 import { getComponent, FORM, SCHEMA } from './token';
 import { FormSchema } from '../core/types';
 
 @Component({
-  selector: 'cms-form-loader',
+  selector: 'form-loader',
   template: `
     <ng-container *ngIf="component">
       <ng-template
@@ -21,7 +21,7 @@ import { FormSchema } from '../core/types';
 export class LoaderComponent {
   private _form: AbstractControl;
   private _schema: FormSchema;
-  component: Promise<typeof ControlBase | typeof FormEntityComponent | typeof ListBase>
+  component: Promise<typeof ControlBase | typeof EntityBase | typeof ListBase>
   injector: Injector;
 
   @Input()

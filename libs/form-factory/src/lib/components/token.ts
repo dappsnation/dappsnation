@@ -18,7 +18,7 @@ export function getComponent<Schema extends FormSchema>(
   } else if (isControlSchema(schema)) {
     return import('./control').then(c => c.ControlBase)
   } else if (isGroupSchema(schema)) {
-    return import('./entity/entity.component').then(c => c.FormEntityComponent)
+    return import('./entity').then(c => c.EntityBase)
   } else if (isArraySchema(schema)) {
     return import('./list').then(c => c.ListBase)
   } else {

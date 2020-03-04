@@ -1,19 +1,23 @@
-import { Component, Input, NgModule, Optional, Inject, Injector, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { FormGroupSchema, isGroupSchema } from '../../core/types';
-import { FormEntity } from '../../core/entity';
-import { CommonModule } from '@angular/common';
-import { FORM, SCHEMA, getComponent, LazyComponent } from '../token';
+import { Input, Optional, Inject, Injector, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { FormGroupSchema, isGroupSchema } from '../core/types';
+import { FormEntity } from '../core/entity';
+import { FORM, SCHEMA, getComponent, LazyComponent } from './token';
 import { Subscription, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged, filter } from 'rxjs/operators';
-import { MatListModule } from '@angular/material/list';
 
-@Component({
-  selector: '[schema] cms-form-entity',
-  templateUrl: './entity.component.html',
-  styleUrls: ['./entity.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class FormEntityComponent<T = any> implements OnDestroy {
+/**
+ * Base class for Entity form component
+ * @example <caption></caption>
+ * ```html
+ * <ng-container *ngFor="let component of components | keyvalue">
+ *   <ng-template
+ *     [ngComponentOutlet]="component.value.component | async"
+ *     [ngComponentOutletInjector]="component.value.injector"
+ *   ></ng-template>
+ * </ng-container>
+ * ```
+ */
+export class EntityBase<T = any> implements OnDestroy {
   private sub: Subscription;
   private _form: FormEntity<any>
   private _schema = new BehaviorSubject<FormGroupSchema<any>>(null);
@@ -85,13 +89,3 @@ export class FormEntityComponent<T = any> implements OnDestroy {
     })
   }
 }
-
-@NgModule({
-  declarations: [FormEntityComponent],
-  exports: [FormEntityComponent],
-  imports: [
-    CommonModule,
-    MatListModule
-  ]
-})
-export class FormEntityModule { }
