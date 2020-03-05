@@ -1,7 +1,7 @@
 import { Input, Injector, Optional, Inject, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormArraySchema, isArraySchema } from '../core/types';
 import { FormList, getFactory } from '../core/list';
-import { FORM, SCHEMA, getComponent, LazyComponent } from './token';
+import { FORM, SCHEMA, getComponent, LazyComponent, FACTORY, FormFactory } from './token';
 import { filter, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription, combineLatest, BehaviorSubject } from 'rxjs';
 
@@ -48,8 +48,8 @@ export class ListBase<T = any> implements OnDestroy {
   constructor(
     @Optional() @Inject(FORM) form: any,
     @Optional() @Inject(SCHEMA) schema: any,
+    @Optional() @Inject(FACTORY) private factory: FormFactory,
     private injector: Injector,
-    private cdr: ChangeDetectorRef
   ) {
     this.form = form;
     this.schema = schema;
@@ -78,11 +78,10 @@ export class ListBase<T = any> implements OnDestroy {
       distinctUntilChanged(([a], [b]) => a.length === b.length),  // Check only size of value
     ).subscribe(() => {
       // TODO: Check if it we can optimize by reusing same component when factory is not a function
-      this.components = form.controls.map(control => ({
+      this.components = this.form.controls.map(control => ({
         injector: this.getInjector(control),
-        component: getComponent(getFactory(this.schema, control.value), this.form)
+        component: getComponent(getFactory(this.schema, control.value), this.factory, control)
       }))
-      this.cdr.markForCheck();
     });
   }
 }

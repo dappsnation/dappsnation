@@ -1,6 +1,3 @@
-<ng-container *ngFor="let component of components | keyvalue">
-  <ng-template
-    [ngComponentOutlet]="component.value.component | async"
-    [ngComponentOutletInjector]="component.value.injector"
-  ></ng-template>
+<ng-container *ngFor="let control of form.controls | keyvalue">
+  <form-outlet [path]="control.key"></form-outlet>
 </ng-container>

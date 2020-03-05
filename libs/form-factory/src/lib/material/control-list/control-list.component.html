@@ -1,9 +1,6 @@
 <ul>
-  <li *ngFor="let item of components; let i = index">
-    <ng-template
-      [ngComponentOutlet]="item.component | async"
-      [ngComponentOutletInjector]="item.injector">
-    </ng-template>
+  <li *ngFor="let control of form.controls; let i = index">
+    <form-outlet [path]="i"></form-outlet>
     <button mat-button (click)="form.removeAt(i)">remove</button>
   </li>
   <li>

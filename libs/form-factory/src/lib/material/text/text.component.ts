@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControlSchema } from '../../core/types';
+import { FormOutlet } from '../../components/form-outlet';
 import { ControlBase } from '../../components/control';
 
 export interface MatTextSchema extends FormControlSchema {
@@ -19,7 +20,7 @@ export interface MatTextSchema extends FormControlSchema {
   styleUrls: ['./text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextFormComponent extends ControlBase {
+export class TextFormComponent implements FormOutlet {
   form: FormControl;
   schema: MatTextSchema;
 }

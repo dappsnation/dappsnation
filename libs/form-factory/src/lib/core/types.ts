@@ -2,6 +2,7 @@ import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray } from 
 import { FormEntity } from './entity';
 import { FormList } from './list';
 import { Type } from '@angular/core';
+import { FormOutlet } from '../components/form-outlet';
 
 export interface FormOption {
   onlySelf?: boolean;
@@ -12,17 +13,17 @@ export interface FormOption {
 export interface FormSchema {
   form: 'group' | 'control' | 'array';
   validators?: ValidatorFn | ValidatorFn[]
-  load?: (form?: AbstractControl) => Promise<Type<any>>
+  load?: string | ((form?: AbstractControl) => Promise<Type<FormOutlet>>)
 }
 
 export interface FormControlSchema extends FormSchema {
   form: 'control',
-  load?: (form?: FormControl) => Promise<Type<any>>;
+  load?: string | ((form?: FormControl) => Promise<Type<any>>);
 }
 
 export interface FormGroupSchema<T> extends FormSchema {
   form: 'group',
-  load?: (form?: FormGroup) => Promise<Type<any>>
+  load?: string | ((form?: FormGroup) => Promise<Type<any>>)
   controls: Partial<{
     [key in Extract<keyof Partial<T>, string>]: GetSchema<T[key]>
   }>
@@ -30,7 +31,7 @@ export interface FormGroupSchema<T> extends FormSchema {
 
 export interface FormArraySchema<T = any> extends FormSchema {
   form: 'array',
-  load?: (form?: FormArray) => Promise<Type<any>>
+  load?: string | ((form?: FormArray) => Promise<Type<any>>)
   factory?: FormSchema | ((value: T) => FormSchema);
   controls: FormSchema[],
 }

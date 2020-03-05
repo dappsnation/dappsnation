@@ -2,43 +2,59 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTextSchema, TextFormComponent, TextFormModule } from '../text/text.component';
 import { EntityComponent, EntityModule } from './entity.component';
 import { FormGroupSchema } from '../../core/types';
-import { FormEntity } from '../../core/entity';
 import { createForms } from '../../core/public_api';
+import { FormOutletModule } from '../../components/form-outlet';
 
 export default {
-  title: 'List Form Component'
+  title: 'Entity Form Component'
 };
 
 interface Person {
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  address: {
+    country: string;
+  };
+}
+
+const initial: Person = {
+  displayName: 'Grand Schtroumpf',
+  address: {
+    country: 'Germany'
+  }
 }
 
 const schema: FormGroupSchema<Person> = {
   form: 'group',
+  load: () => import('./entity.component').then(c => c.EntityComponent),
   controls: {
-    firstName: <MatTextSchema>{
+    displayName: <MatTextSchema>{
       form: 'control',
       label: 'First Name',
       hint: 'Some hint',
       load: () => import('../text/text.component').then(c => c.TextFormComponent),
     },
-    lastName: <MatTextSchema>{
-      form: 'control',
-      label: 'Last Name',
-      hint: 'Some hint',
-      load: () => import('../text/text.component').then(c => c.TextFormComponent),
+    address: {
+      form: 'group',
+      load: () => import('./entity.component').then(c => c.EntityComponent),
+      controls: {
+        country: <MatTextSchema>{
+          form: 'control',
+          label: 'Last Name',
+          hint: 'Some hint',
+          load: () => import('../text/text.component').then(c => c.TextFormComponent),
+        }
+      }
     }
   }
 };
-const form = createForms(schema, { firstName: '', lastName: '' });
+const form = createForms(schema, initial);
 
 export const main = () => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, EntityModule, TextFormModule],
-    entryComponents: [TextFormComponent], // Should not be part of the entryComponents...
+    imports: [BrowserAnimationsModule, EntityModule, TextFormModule, FormOutletModule],
+    entryComponents: [EntityComponent, TextFormComponent], // Should not be part of the entryComponents...
   },
-  component: EntityComponent,
+  template: '<form-outlet [form]="form" [schema]="schema"></form-outlet>',
   props: {
     form,
     schema

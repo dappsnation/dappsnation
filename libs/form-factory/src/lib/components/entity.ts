@@ -1,7 +1,7 @@
 import { Input, Optional, Inject, Injector, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormGroupSchema, isGroupSchema } from '../core/types';
 import { FormEntity } from '../core/entity';
-import { FORM, SCHEMA, getComponent, LazyComponent } from './token';
+import { FORM, SCHEMA, getComponent, LazyComponent, FACTORY, FormFactory } from './token';
 import { Subscription, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged, filter } from 'rxjs/operators';
 
@@ -48,8 +48,8 @@ export class EntityBase<T = any> implements OnDestroy {
   constructor(
     @Optional() @Inject(FORM) form: any,
     @Optional() @Inject(SCHEMA) schema: any,
+    @Optional() @Inject(FACTORY) private factory: FormFactory,
     private injector: Injector,
-    private cdr: ChangeDetectorRef
   ) {
     this.form = form;
     this.schema = schema;
@@ -82,9 +82,8 @@ export class EntityBase<T = any> implements OnDestroy {
       for (const key in this.schema.controls) {
         this.components[key] = {
           injector: this.getInjector(key),
-          component: getComponent(this.schema.controls[key])
+          component: getComponent(this.schema.controls[key], this.factory, form.controls[key])
         }
-        this.cdr.markForCheck();
       }
     })
   }
