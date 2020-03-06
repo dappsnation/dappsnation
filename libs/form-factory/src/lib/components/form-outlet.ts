@@ -10,7 +10,7 @@ export interface FormOutlet {
   schema: FormSchema;
 }
 
-function getSchema(parent: FormSchema, path: string | number, form: AbstractControl) {
+export function getSchema(parent: FormSchema, path: string | number, form: AbstractControl) {
   if (isControlSchema(parent)) {
     return parent;
   } else if (isGroupSchema(parent)) {
@@ -57,7 +57,7 @@ export class FormOutletDirective {
     if (this.schema.load) {
       if (typeof this.schema.load === 'string') {
         if (!this.factory) {
-          throw new Error(`Cannot load schema with key ${this.schema.load} as no Factory has been provided in FormOutletModule.`)
+          throw new Error(`Cannot load schema with key ${this.schema.load} as no Factory has been provided in FormFactoryModule.`)
         } else if (this.schema.load in this.factory) {
           return this.factory[this.schema.load](this.form);
         } else {
@@ -85,10 +85,10 @@ export class FormOutletDirective {
   declarations: [FormOutletDirective],
   exports: [FormOutletDirective],
 })
-export class FormOutletModule {
+export class FormFactoryModule {
   static forRoot(factory: FormFactory): ModuleWithProviders  {
     return { 
-      ngModule: FormOutletModule,
+      ngModule: FormFactoryModule,
       providers: [{ provide: FACTORY, useValue: factory}] 
     }
   }

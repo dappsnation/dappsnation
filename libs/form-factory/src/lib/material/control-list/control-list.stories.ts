@@ -5,7 +5,7 @@ import { MatTextSchema, TextFormComponent, TextFormModule } from '../text/text.c
 import { FormList } from '../../core/list';
 import { FormArraySchema } from '../../core/types';
 import { FormFactory } from '../../components/token';
-import { FormOutletModule } from '../../components/form-outlet';
+import { FormFactoryModule } from '../../components/form-outlet';
 
 export default {
   title: 'List Form Component'
@@ -32,7 +32,7 @@ const form = FormList.factory(schema, ['some text'], (text: string) => new FormC
 export const main = () => ({
   moduleMetadata: {
     imports: [
-      FormOutletModule.forRoot(factory),
+      FormFactoryModule.forRoot(factory),
       BrowserAnimationsModule,
       ControlListModule,
       TextFormModule

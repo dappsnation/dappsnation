@@ -1,6 +1,6 @@
 import { TextFormModule, TextFormComponent, MatTextSchema } from './text.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FormOutletModule } from '../../components/form-outlet';
+import { FormFactoryModule } from '../../components/form-outlet';
 import { createForms } from '../../core/public_api';
 
 
@@ -17,7 +17,7 @@ const form = createForms(schema, 'some text');
 
 export const main = () => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, TextFormModule, FormOutletModule],
+    imports: [BrowserAnimationsModule, TextFormModule, FormFactoryModule],
     entryComponents: [TextFormComponent]
   },
   template: `<form-outlet [form]="form" [schema]="schema"></form-outlet>`,

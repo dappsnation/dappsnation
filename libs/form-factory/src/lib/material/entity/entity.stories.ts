@@ -3,7 +3,7 @@ import { MatTextSchema, TextFormComponent, TextFormModule } from '../text/text.c
 import { EntityComponent, EntityModule } from './entity.component';
 import { FormGroupSchema } from '../../core/types';
 import { createForms } from '../../core/public_api';
-import { FormOutletModule } from '../../components/form-outlet';
+import { FormFactoryModule } from '../../components/form-outlet';
 
 export default {
   title: 'Entity Form Component'
@@ -51,7 +51,7 @@ const form = createForms(schema, initial);
 
 export const main = () => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, EntityModule, TextFormModule, FormOutletModule],
+    imports: [BrowserAnimationsModule, EntityModule, TextFormModule, FormFactoryModule],
     entryComponents: [EntityComponent, TextFormComponent], // Should not be part of the entryComponents...
   },
   template: '<form-outlet [form]="form" [schema]="schema"></form-outlet>',
