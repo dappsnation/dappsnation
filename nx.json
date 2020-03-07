@@ -22,6 +22,18 @@
       "implicitDependencies": [
         "form-factory"
       ]
+    },
+    "material-form-factory": {
+      "tags": [
+        "material",
+        "form"
+      ]
+    },
+    "material-form-factory-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "material-form-factory"
+      ]
     }
   }
 }

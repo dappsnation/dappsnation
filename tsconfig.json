@@ -16,7 +16,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@dappsnation/form-factory": ["libs/form-factory/src/index.ts"]
+      "ng-form-factory": ["libs/form-factory/src/index.ts"],
+      "ng-form-factory/*": ["libs/form-factory/src/lib/*"],
+      "@dappsnation/material-form-factory": [
+        "libs/material-form-factory/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
