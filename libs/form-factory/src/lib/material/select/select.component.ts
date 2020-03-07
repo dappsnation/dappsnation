@@ -2,21 +2,23 @@ import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { PortalModule } from '@angular/cdk/portal';
 import { FormOutlet } from '../../core';
 import { MatSelectSchema } from './select.schema';
 import { FormFieldModule } from '../form-field/form-field.component';
 
 @Component({
-  selector: 'dappsnation-select',
+  selector: 'form-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectFormComponent implements FormOutlet {
+export class SelectFormComponent<T> implements FormOutlet {
   form: FormControl;
   schema: MatSelectSchema;
 
   isArray = Array.isArray;
+
 }
 
 
@@ -25,6 +27,7 @@ export class SelectFormComponent implements FormOutlet {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    PortalModule,
     FormFieldModule,
     MatSelectModule
   ]

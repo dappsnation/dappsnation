@@ -1,8 +1,16 @@
-import { Directive, ComponentFactoryResolver, ComponentRef, ViewContainerRef, Input, NgModule, Optional, Injector, Inject, ChangeDetectorRef, ModuleWithProviders, Type } from '@angular/core';
+import { Directive, ComponentFactoryResolver, ComponentRef, ViewContainerRef, Input, NgModule, Optional, Injector, Inject, ChangeDetectorRef, ModuleWithProviders, Type, SkipSelf, forwardRef, InjectionToken } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { FormSchema, isControlSchema, isGroupSchema, isArraySchema } from '../core/types';
-import { FormFactory, FACTORY } from './token';
 import { getFactory } from '../core/list';
+
+
+export const CONTEXT = new InjectionToken<FormOutlet>('Context holding the form & schema');
+export const FACTORY = new InjectionToken<FormFactory>('Factory used to generate form component');
+
+export interface FormFactory {
+  [key: string]: (form?: AbstractControl) => Promise<Type<any>>;
+}
+
 
 export interface FormOutlet {
   form: AbstractControl;
@@ -28,7 +36,8 @@ export function getChildSchema(parent: FormSchema, path: string | number, form?:
 }
 
 @Directive({
-  selector: '[form] [schema] form-outlet, [path] form-outlet'
+  selector: '[form] [schema] form-outlet, [path] form-outlet',
+  providers:  [{ provide: CONTEXT, useExisting: forwardRef(() => FormOutletDirective) }]
 })
 export class FormOutletDirective {
   ref: ComponentRef<FormOutlet>;
@@ -37,7 +46,7 @@ export class FormOutletDirective {
   @Input() path: string;
 
   constructor(
-    @Optional() @Inject('CONTEXT') private context: FormOutlet,
+    @SkipSelf() @Optional() @Inject(CONTEXT) private context: FormOutletDirective,
     @Optional() @Inject(FACTORY) private factory: FormFactory,
     private resolver: ComponentFactoryResolver,
     private containerRef: ViewContainerRef,

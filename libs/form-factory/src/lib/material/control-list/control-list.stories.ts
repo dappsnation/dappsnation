@@ -4,8 +4,7 @@ import { ControlListModule, ControlListComponent } from './control-list.componen
 import { TextFormComponent, TextFormModule, matText } from '../text';
 import { FormList } from '../../core/list';
 import { FormArraySchema } from '../../core/types';
-import { FormFactory } from '../../core/token';
-import { FormFactoryModule } from '../../core/form-outlet';
+import { FormFactory, FormFactoryModule } from '../../core/form-outlet';
 
 export default {
   title: 'List Form Component'
