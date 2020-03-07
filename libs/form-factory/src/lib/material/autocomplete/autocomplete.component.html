@@ -1,0 +1,16 @@
+<ng-container *ngIf="schema">
+  <form-field [form]="form" [schema]="schema">
+    <input matInput
+          [type]="schema.type"
+          [placeholder]="schema.placeholder"
+          [formControl]="form"
+          [matAutocomplete]="auto">
+  </form-field>
+  
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayLabel.bind(this)">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{ displayLabel(option) }}
+    </mat-option>
+  </mat-autocomplete>
+</ng-container>
+

@@ -21,7 +21,7 @@ export class FormFieldComponent implements AfterViewInit {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // Hack to support
+  // Hacky solution waiting for this issue to be solved: https://github.com/angular/components/issues/9411
   ngAfterViewInit() {
     if (this.beforeViewInit) {
       this.matFormField._control = this.control;

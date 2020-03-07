@@ -6,6 +6,7 @@ export interface MatTextSchema extends FormControlSchema, MatFormFieldSchema<str
 export function matText(params: Partial<MatTextSchema> = {}): MatTextSchema {
   return {
     form: 'control',
+    type: 'text',
     ...params
   }
 }

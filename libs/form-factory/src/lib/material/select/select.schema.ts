@@ -8,6 +8,7 @@ export interface MatSelectSchema<T = any> extends FormControlSchema, MatFormFiel
 export function matSelect(params: Partial<MatSelectSchema> = {}): MatSelectSchema {
   return {
     form: 'control',
+    type: 'text',
     options: [],
     ...params
   }
