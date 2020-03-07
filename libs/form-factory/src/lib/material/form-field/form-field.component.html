@@ -1,0 +1,15 @@
+<ng-container *ngIf="schema">
+  <mat-form-field [appearance]="schema.appearance" [floatLabel]="schema.floatLabel" [hideRequiredMarker]="schema.hideRequiredMarker">
+    <mat-label *ngIf="schema.label">{{ schema.label }}</mat-label>
+    <mat-hint *ngIf="schema.hint">{{ schema.hint }}</mat-hint>
+
+    <!-- Implement prefix / suffix -->
+
+    <ng-container *ngFor="let error of schema.errors | keyvalue">
+      <mat-error *ngIf="form.hasError(error.key)">
+        {{ error.value }}
+      </mat-error>
+    </ng-container>
+    <ng-content></ng-content>
+  </mat-form-field>
+</ng-container>

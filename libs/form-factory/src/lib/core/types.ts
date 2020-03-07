@@ -2,7 +2,7 @@ import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray } from 
 import { FormEntity } from './entity';
 import { FormList } from './list';
 import { Type } from '@angular/core';
-import { FormOutlet } from '../components/form-outlet';
+import { FormOutlet } from './form-outlet';
 
 export interface FormOption {
   onlySelf?: boolean;

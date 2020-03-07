@@ -4,13 +4,18 @@ import { FormSchema, isControlSchema, isGroupSchema, isArraySchema } from '../co
 import { FormFactory, FACTORY } from './token';
 import { getFactory } from '../core/list';
 
-
 export interface FormOutlet {
   form: AbstractControl;
   schema: FormSchema;
 }
 
-export function getSchema(parent: FormSchema, path: string | number, form: AbstractControl) {
+/**
+ * Get the child schema
+ * @param parent The parent schema
+ * @param path The path to access the child schema
+ * @param form The form linked to the child schema. Used for FormArraySchema
+ */
+export function getChildSchema(parent: FormSchema, path: string | number, form?: AbstractControl) {
   if (isControlSchema(parent)) {
     return parent;
   } else if (isGroupSchema(parent)) {
@@ -42,7 +47,7 @@ export class FormOutletDirective {
   async ngOnInit() {
     if (this.context) {
       this.form = this.context.form.get(`${this.path}`);
-      this.schema = getSchema(this.context.schema, this.path, this.form);
+      this.schema = getChildSchema(this.context.schema, this.path, this.form);
     }
     const component = await this.getComponent();
     const factory = this.resolver.resolveComponentFactory(component);

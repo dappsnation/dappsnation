@@ -1,7 +1,8 @@
-import { TextFormModule, TextFormComponent, MatTextSchema } from './text.component';
+import { TextFormModule, TextFormComponent } from './text.component';
+import { MatTextSchema } from './text.schema';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FormFactoryModule } from '../../components/form-outlet';
-import { createForms } from '../../core/public_api';
+import { FormFactoryModule } from '../../core/form-outlet';
+import { createForms } from '../../core';
 
 
 export default {

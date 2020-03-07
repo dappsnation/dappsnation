@@ -11,7 +11,8 @@
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/form-factory/tsconfig.lib.json",
-            "project": "libs/form-factory/ng-package.json"
+            "project": "libs/form-factory/ng-package.json",
+            "styles": ["styles/style.scss"]
           },
           "configurations": {
             "production": {

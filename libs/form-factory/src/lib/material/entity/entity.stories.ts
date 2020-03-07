@@ -1,9 +1,9 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTextSchema, TextFormComponent, TextFormModule } from '../text/text.component';
+import { MatTextSchema, TextFormComponent, TextFormModule } from '../text';
 import { EntityComponent, EntityModule } from './entity.component';
 import { FormGroupSchema } from '../../core/types';
-import { createForms } from '../../core/public_api';
-import { FormFactoryModule } from '../../components/form-outlet';
+import { createForms } from '../../core/create-forms';
+import { FormFactoryModule } from '../../core/form-outlet';
 
 export default {
   title: 'Entity Form Component'

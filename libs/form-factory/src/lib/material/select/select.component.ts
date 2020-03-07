@@ -1,23 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
+import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlBase } from '../../components/control';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { FormOutlet } from '../../core';
+import { MatSelectSchema } from './select.schema';
+import { FormFieldModule } from '../form-field/form-field.component';
 
 @Component({
   selector: 'dappsnation-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  styleUrls: ['./select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent extends ControlBase {
+export class SelectFormComponent implements FormOutlet {
+  form: FormControl;
+  schema: MatSelectSchema;
 
-
+  isArray = Array.isArray;
 }
 
 
 @NgModule({
-  declarations: [SelectComponent],
+  declarations: [SelectFormComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    FormFieldModule,
+    MatSelectModule
   ]
 })
-export class SelectModule { }
+export class SelectFormModule { }

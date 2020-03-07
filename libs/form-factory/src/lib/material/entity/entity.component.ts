@@ -1,6 +1,6 @@
 import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormFactoryModule, FormOutlet } from '../../components/form-outlet';
+import { FormFactoryModule, FormOutlet } from '../../core/form-outlet';
 import { FormEntity } from '../../core/entity';
 import { FormGroupSchema } from '../../core/types';
 

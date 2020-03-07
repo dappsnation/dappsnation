@@ -1,11 +1,11 @@
 import { FormControl } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ControlListModule, ControlListComponent } from './control-list.component';
-import { MatTextSchema, TextFormComponent, TextFormModule } from '../text/text.component';
+import { TextFormComponent, TextFormModule, matText } from '../text';
 import { FormList } from '../../core/list';
 import { FormArraySchema } from '../../core/types';
-import { FormFactory } from '../../components/token';
-import { FormFactoryModule } from '../../components/form-outlet';
+import { FormFactory } from '../../core/token';
+import { FormFactoryModule } from '../../core/form-outlet';
 
 export default {
   title: 'List Form Component'
@@ -19,12 +19,11 @@ const factory: FormFactory = {
 const schema: FormArraySchema<string> = {
   form: 'array',
   load: 'list',
-  factory: <MatTextSchema>{
-    form: 'control',
+  factory: matText({
     label: 'Text here',
     hint: 'Some hint',
     load: 'text',
-  },
+  }),
   controls: []
 };
 const form = FormList.factory(schema, ['some text'], (text: string) => new FormControl(text))

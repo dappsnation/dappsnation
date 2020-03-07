@@ -2,17 +2,10 @@ import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormControlSchema } from '../../core/types';
-import { FormOutlet } from '../../components/form-outlet';
-import { ControlBase } from '../../components/control';
+import { FormOutlet } from '../../core/form-outlet';
+import { MatTextSchema } from './text.schema';
+import { FormFieldModule } from '../form-field/form-field.component';
 
-export interface MatTextSchema extends FormControlSchema {
-  label: string;
-  value?: string;
-  hint?: string;
-  placeholder?: string;
-}
 
 @Component({
   selector: 'form-text',
@@ -31,7 +24,7 @@ export class TextFormComponent implements FormOutlet {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
+    FormFieldModule,
     MatInputModule,
   ]
 })

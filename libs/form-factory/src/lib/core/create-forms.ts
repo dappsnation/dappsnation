@@ -1,5 +1,4 @@
-import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm, FormSchema } from "./types";
-import { GetEntity, FormArraySchema, GetItem } from './types';
+import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm, FormSchema, GetEntity, FormArraySchema, GetItem } from "./types";
 import { FormControl } from '@angular/forms';
 import { FormEntity, EntityContols } from './entity';
 import { FormList, getFactory } from './list';

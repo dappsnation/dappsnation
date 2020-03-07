@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormArraySchema } from '../../core/types';
 import { FormList } from '../../core/list';
-import { FormFactoryModule, FormOutlet } from '../../components/form-outlet';
+import { FormFactoryModule, FormOutlet } from '../../core/form-outlet';
 
 @Component({
   selector: 'form-control-list',
