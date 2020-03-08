@@ -1,4 +1,9 @@
+// Required for good type export
 import { TextFormComponent } from 'material-form-factory/text';
+import { SelectFormComponent } from 'material-form-factory/select';
+import { FormAutocompleteComponent } from 'material-form-factory/autocomplete';
+import { EntityComponent } from 'material-form-factory/entity';
+import { ControlListComponent } from 'material-form-factory/control-list';
 
 export const materialFormFactory = {
   text: () => import('material-form-factory/text').then(c => c.TextFormComponent),
