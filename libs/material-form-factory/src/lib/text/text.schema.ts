@@ -7,6 +7,7 @@ export function matText(params: Partial<MatTextSchema> = {}): MatTextSchema {
   return {
     form: 'control',
     type: 'text',
+    load: 'text',
     ...params
   }
 }

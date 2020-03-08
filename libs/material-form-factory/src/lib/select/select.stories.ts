@@ -26,7 +26,7 @@ const schema: MatSelectSchema<string> = matSelect({
   optionTemplate: () => Promise.resolve(Option)
 });
 
-const form = createForms(schema, '');
+const form = createForms(schema, 'france');
 
 export const main = () => ({
   moduleMetadata: {

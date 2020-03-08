@@ -14,7 +14,7 @@ import { FormOutlet } from 'ng-form-factory';
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectFormComponent<T> implements FormOutlet {
+export class SelectFormComponent implements FormOutlet {
   form: FormControl;
   schema: MatSelectSchema;
 
@@ -28,7 +28,6 @@ export class SelectFormComponent<T> implements FormOutlet {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PortalModule,
     FormFieldModule,
     MatSelectModule
   ]

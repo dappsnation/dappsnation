@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormGroup } from '@angular/forms';
 import { GetForm, FormGroupSchema, GetEntity, FormOption } from './types';
 import { Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';

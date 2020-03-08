@@ -12,6 +12,7 @@ export function matSelect(params: Partial<MatSelectSchema> = {}): MatSelectSchem
   return {
     form: 'control',
     type: 'text',
+    load: 'select',
     options: [],
     ...params
   }

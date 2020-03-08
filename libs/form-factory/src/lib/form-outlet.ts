@@ -87,7 +87,7 @@ export class FormOutletDirective {
 
   createInjector() {
     return Injector.create({
-      providers: [{ provide: 'CONTEXT', useValue: { form: this.form, schema: this.schema }}],
+      providers: [{ provide: CONTEXT, useValue: { form: this.form, schema: this.schema }}],
       parent: this.containerRef.injector
     })
   }
@@ -103,7 +103,7 @@ export class FormFactoryModule {
   static forRoot(factory: FormFactory): ModuleWithProviders  {
     return { 
       ngModule: FormFactoryModule,
-      providers: [{ provide: FACTORY, useValue: factory}] 
+      providers: [{ provide: FACTORY, useValue: factory }] 
     }
   }
 }

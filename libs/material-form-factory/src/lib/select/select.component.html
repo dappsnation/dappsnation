@@ -1,5 +1,5 @@
 <form-field [form]="form" [schema]="schema">
-  <mat-select [formControl]="form" name="food">
+  <mat-select [formControl]="form" >
     <!-- Array -->
     <ng-container *ngIf="isArray(schema.options) else isMap">
       <mat-option *ngFor="let option of schema.options" [value]="option">
