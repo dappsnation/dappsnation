@@ -25,7 +25,7 @@ export function getFactory<T>(schema: FormArraySchema<T>, item?: T) {
 export { Controls as ListContols };
 
 export class FormList<Schema extends FormArraySchema<T>, T = GetItem<Schema>> extends FormArray {
-  createControl: (item: Partial<T>) => Controls<Schema>;
+  createControl: (item?: Partial<T>) => Controls<Schema>;
   controls: Controls<Schema>[];
   value: T[];
   valueChanges: Observable<T[]>;
@@ -33,7 +33,7 @@ export class FormList<Schema extends FormArraySchema<T>, T = GetItem<Schema>> ex
 
   static factory<Schema extends FormArraySchema<T>, T = GetItem<Schema>>(
     schema: Schema,
-    initial: T[],
+    initial: T[] = [],
     createControl: (item: Partial<T>) => Controls<Schema>
   ) {
     const controls = initial.map(item => createControl(item));
@@ -72,7 +72,7 @@ export class FormList<Schema extends FormArraySchema<T>, T = GetItem<Schema>> ex
   }
 
   /** Create one or several controls */
-  add(value: Partial<T> | Partial<T>[]) {
+  add(value?: Partial<T> | Partial<T>[]) {
     if (!this.createControl) {
       throw new Error('Method "add" cannot be used because "createControl" is not defined')
     }

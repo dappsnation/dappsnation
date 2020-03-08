@@ -11,7 +11,7 @@ type GetArrayType<T> = T extends (infer I)[] ? I : never;
  * @param schema Schema of the form
  * @param value The value to initialize the control with
  */
-export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, value: T): GetForm<Schema> {
+export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, value?: T): GetForm<Schema> {
   if (isControlSchema(schema)) {
     return new FormControl(value) as any;
   }

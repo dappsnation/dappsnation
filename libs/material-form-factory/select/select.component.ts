@@ -1,12 +1,11 @@
 import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { PortalModule } from '@angular/cdk/portal';
-import { MatSelectSchema } from './select.schema';
-import { FormFieldModule } from '../form-field/form-field.component';
-import { OptionOutletDirective } from './option-outlet';
 import { FormOutlet } from 'ng-form-factory';
+import { FormFieldModule } from 'material-form-factory/form-field';
+import { MatSelectSchema } from './select.schema';
+import { OptionOutletDirective } from './option-outlet';
 
 @Component({
   selector: 'form-select',

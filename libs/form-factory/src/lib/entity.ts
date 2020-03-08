@@ -22,7 +22,7 @@ export class FormEntity<Schema extends FormGroupSchema<T>, T = GetEntity<Schema>
   // Todo : remove "as any"
   static factory<Schema extends FormGroupSchema<T>, T = GetEntity<Schema>>(
     schema: Schema,
-    initial: Partial<T>,
+    initial: Partial<T> = {},
     createControl: <K extends keyof T>(key: K, value: T[K]) => Controls<Schema>
   ) {
     const controls: Controls<Schema> = {} as any;

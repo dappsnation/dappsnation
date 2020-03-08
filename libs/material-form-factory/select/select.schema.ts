@@ -1,5 +1,5 @@
 import { FormControlSchema } from 'ng-form-factory';
-import { MatFormFieldSchema } from '../form-field/form-field.schema';
+import { MatFormFieldSchema } from 'material-form-factory/form-field';
 import { Type } from '@angular/core';
 import { OptionOutlet } from './option-outlet';
 

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormOutlet } from 'ng-form-factory';
 import { MatTextSchema } from './text.schema';
-import { FormFieldModule } from '../form-field/form-field.component';
+import { FormFieldModule } from 'material-form-factory/form-field';
 
 
 @Component({

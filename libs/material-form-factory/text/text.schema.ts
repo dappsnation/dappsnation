@@ -1,4 +1,4 @@
-import { MatFormFieldSchema } from '../form-field/form-field.schema';
+import { MatFormFieldSchema } from 'material-form-factory/form-field';
 import { FormControlSchema } from 'ng-form-factory';
 
 export interface MatTextSchema extends FormControlSchema, MatFormFieldSchema<string> {}

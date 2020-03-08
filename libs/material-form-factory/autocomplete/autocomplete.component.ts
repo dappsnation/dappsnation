@@ -1,11 +1,11 @@
 import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { FormFieldModule } from '../form-field/form-field.component';
 import { FormOutlet } from 'ng-form-factory';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatSelectSchema } from '../select/select.schema';
+import { FormFieldModule } from 'material-form-factory/form-field';
+import { MatSelectSchema } from 'material-form-factory/select';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 

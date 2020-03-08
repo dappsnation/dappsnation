@@ -120,8 +120,7 @@
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/material-form-factory/tsconfig.lib.json",
-            "project": "libs/material-form-factory/ng-package.json",
-            "styles": ["styles/style.scss"]
+            "project": "libs/material-form-factory/ng-package.json"
           },
           "configurations": {
             "production": {
