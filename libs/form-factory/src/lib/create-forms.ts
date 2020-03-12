@@ -2,6 +2,7 @@ import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm
 import { FormControl } from '@angular/forms';
 import { FormEntity, EntityContols } from './entity';
 import { FormList, getFactory } from './list';
+import { createValue } from './create-value';
 
 type GetArrayType<T> = T extends (infer I)[] ? I : never;
 
@@ -12,6 +13,9 @@ type GetArrayType<T> = T extends (infer I)[] ? I : never;
  * @param value The value to initialize the control with
  */
 export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, value?: T): GetForm<Schema> {
+  if (!value) {
+    value = createValue(schema, value);
+  }
   if (isControlSchema(schema)) {
     return new FormControl(value) as any;
   }

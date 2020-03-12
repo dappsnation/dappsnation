@@ -32,8 +32,8 @@ export interface FormGroupSchema<T> extends FormSchema {
 export interface FormArraySchema<T = any> extends FormSchema {
   form: 'array',
   load?: string | ((form?: FormArray) => Promise<Type<any>>)
-  factory?: FormSchema | ((value: T) => FormSchema);
-  controls: FormSchema[],
+  factory?: GetSchema<T> | ((value: T) => GetSchema<T>);
+  controls: GetSchema<T>[],
 }
 
 /** Check is a schema is for a FormGroup */

@@ -24,6 +24,7 @@ export class SelectFormComponent implements FormOutlet {
 
 @NgModule({
   declarations: [SelectFormComponent, OptionOutletDirective],
+  exports: [SelectFormComponent, OptionOutletDirective, MatSelectModule],
   imports: [
     CommonModule,
     ReactiveFormsModule,
