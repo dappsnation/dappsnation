@@ -2,7 +2,7 @@ import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm
 import { FormControl } from '@angular/forms';
 import { FormEntity, EntityContols } from './entity';
 import { FormList, getFactory } from './list';
-import { createValue } from './create-value';
+import { createState } from './create-state';
 
 type GetArrayType<T> = T extends (infer I)[] ? I : never;
 
@@ -14,7 +14,7 @@ type GetArrayType<T> = T extends (infer I)[] ? I : never;
  */
 export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, value?: T): GetForm<Schema> {
   if (!value) {
-    value = createValue(schema, value);
+    value = createState(schema, value);
   }
   if (isControlSchema(schema)) {
     return new FormControl(value) as any;
@@ -37,7 +37,10 @@ export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(sc
  * @param FormScschemahema Schema for a FormGroup
  * @param entity The object to initialize the control with
  */
-export function createEntityControls<Schema extends FormGroupSchema<T>, T = GetEntity<Schema>>(schema: Schema, group: Partial<T>): EntityContols<Schema> {
+export function createEntityControls<
+  Schema extends FormGroupSchema<T>,
+  T = GetEntity<Schema>
+>(schema: Schema, group: Partial<T>): EntityContols<Schema> {
   if (schema.form !== 'group') {
     throw new Error('Cannot create a Form Entity if type is not "group"');
   }

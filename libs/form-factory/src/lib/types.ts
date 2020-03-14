@@ -2,7 +2,20 @@ import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray } from 
 import { FormEntity } from './entity';
 import { FormList } from './list';
 import { Type } from '@angular/core';
-import { FormOutlet } from './form-outlet';
+
+export interface Factory {
+  [key: string]: Partial<{
+    component: (params?: AbstractControl) => Promise<Type<FormOutlet>>;
+    form: <T>(params?: Partial<T>) => GetForm<GetSchema<T>>;
+    schema: <T>(params?: Partial<GetSchema<T>>) => GetSchema<T>;
+    state: <T>(params?: Partial<T>) => T
+  }>
+}
+
+export interface FormOutlet {
+  form: AbstractControl;
+  schema: FormSchema;
+}
 
 export interface FormOption {
   onlySelf?: boolean;
@@ -12,18 +25,18 @@ export interface FormOption {
 // Schema
 export interface FormSchema {
   form: 'group' | 'control' | 'array';
+  load: string | ((form?: AbstractControl) => Promise<Type<FormOutlet>>)
   validators?: ValidatorFn | ValidatorFn[]
-  load?: string | ((form?: AbstractControl) => Promise<Type<FormOutlet>>)
 }
 
 export interface FormControlSchema extends FormSchema {
   form: 'control',
-  load?: string | ((form?: FormControl) => Promise<Type<any>>);
+  load: string | ((form?: FormControl) => Promise<Type<any>>);
 }
 
 export interface FormGroupSchema<T> extends FormSchema {
   form: 'group',
-  load?: string | ((form?: FormGroup) => Promise<Type<any>>)
+  load: string | ((form?: FormGroup) => Promise<Type<any>>)
   controls: Partial<{
     [key in Extract<keyof Partial<T>, string>]: GetSchema<T[key]>
   }>
@@ -31,8 +44,8 @@ export interface FormGroupSchema<T> extends FormSchema {
 
 export interface FormArraySchema<T = any> extends FormSchema {
   form: 'array',
-  load?: string | ((form?: FormArray) => Promise<Type<any>>)
-  factory?: GetSchema<T> | ((value: T) => GetSchema<T>);
+  load: string | ((form?: FormArray) => Promise<Type<any>>)
+  factory: GetSchema<T> | ((value: T) => GetSchema<T>);
   controls: GetSchema<T>[],
 }
 

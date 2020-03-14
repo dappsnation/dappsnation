@@ -18,7 +18,7 @@ export function getFactory<T>(schema: FormArraySchema<T>, item?: T) {
     }
     return schema.factory(item);
   } else {
-    return schema.factory || { form: 'control' };
+    return schema.factory;
   }
 }
 

@@ -5,16 +5,16 @@ import { FormSchema, isArraySchema, isGroupSchema, GetEntity } from "./types";
  * @param schema The schema to base the form upon
  * @param initial Initial value
  */
-export function createValue<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, initial?: Partial<T>): T {
+export function createState<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, initial?: Partial<T>): T {
   if (isArraySchema(schema)) {
     return schema.controls.map((node, i) => {
       const value = initial && initial[i];
-      return createValue(node, value);
+      return createState(node, value);
     }) as any;
   } else if (isGroupSchema(schema)) {
     return Object.keys(schema.controls).reduce((acc, key) => {
       const value = initial && initial[key];
-      acc[key] = createValue(schema.controls[key], value);
+      acc[key] = createState(schema.controls[key], value);
       return acc;
     }, {}) as T;
   } else {
