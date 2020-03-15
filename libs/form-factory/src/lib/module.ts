@@ -12,8 +12,8 @@ import { FACTORY } from './tokens';
 export class FormFactoryModule {
   static forRoot(factory: Factory): ModuleWithProviders  {
     const required = ['array', 'group'];
-    if (required.every(require => Object.keys(factory).includes(require))) {
-      throw new Error(`Factory should at least have the keys: ${required.join(', ')}`);
+    if (required.some(require => !Object.keys(factory).includes(require))) {
+      throw new Error(`Factory should at least have the keys: ${required.join(', ')}, instead got: ${Object.keys(factory).join(', ')}`);
     }
     return { 
       ngModule: FormFactoryModule,

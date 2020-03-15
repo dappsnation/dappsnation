@@ -3,13 +3,17 @@ import { FormEntity } from './entity';
 import { FormList } from './list';
 import { Type } from '@angular/core';
 
-export interface Factory {
-  [key: string]: Partial<{
-    component: (params?: AbstractControl) => Promise<Type<FormOutlet>>;
-    form: <T>(params?: Partial<T>) => GetForm<GetSchema<T>>;
-    schema: <T>(params?: Partial<GetSchema<T>>) => GetSchema<T>;
-    state: <T>(params?: Partial<T>) => T
-  }>
+export type Definition<T extends Factory> = Record<string, keyof T> | keyof T;
+
+export type Factory<R extends Record<string, any> = any> = {
+  [key in keyof R]: Partial<FactoryField<R[key]>>
+}
+
+export interface FactoryField<T> {
+  component: (params?: AbstractControl) => Promise<Type<FormOutlet>>;
+  form: (params?: Partial<T>) => GetForm<GetSchema<T>>;
+  schema: (params?: Partial<GetSchema<T>>) => GetSchema<T>;
+  state: (params?: Partial<T>) => T
 }
 
 export interface FormOutlet {
@@ -34,7 +38,7 @@ export interface FormControlSchema extends FormSchema {
   load: string | ((form?: FormControl) => Promise<Type<any>>);
 }
 
-export interface FormGroupSchema<T> extends FormSchema {
+export interface FormGroupSchema<T = any> extends FormSchema {
   form: 'group',
   load: string | ((form?: FormGroup) => Promise<Type<any>>)
   controls: Partial<{

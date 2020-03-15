@@ -37,7 +37,7 @@ export class FormList<Schema extends FormArraySchema<T>, T = GetItem<Schema>> ex
     createControl: (item: Partial<T>) => Controls<Schema>
   ) {
     const controls = initial.map(item => createControl(item));
-    const form = new FormList(schema, controls);
+    const form = new FormList<Schema, T>(schema, controls);
     form.createControl = createControl
     return form;
   }

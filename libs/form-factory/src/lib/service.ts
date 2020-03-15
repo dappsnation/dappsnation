@@ -1,12 +1,11 @@
-import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
-import { FormSchema, GetEntity, isArraySchema, isGroupSchema, GetForm, isControlSchema, Factory } from './types';
+import { Injectable, Inject, Optional, Type } from '@angular/core';
+import { FormSchema, GetEntity, isArraySchema, isGroupSchema, GetForm, isControlSchema, Factory, Definition, FactoryField } from './types';
 import { FormEntity } from './entity';
 import { FormControl } from '@angular/forms';
 import { FormList, getFactory } from './list';
 import { FACTORY } from './tokens';
 
 
-type Definition<T extends Factory> = Record<string, keyof T> | keyof T;
 type GetArrayType<T> = T extends (infer I)[] ? I : never;
 
 @Injectable()
@@ -22,7 +21,7 @@ export class FormFactory {
    * @param schema The schema defining the component
    * @param form The form used to create the component
    */
-  createComponent<Schema extends FormSchema>(schema: Schema, form: GetForm<Schema>) {
+  createComponent<Schema extends FormSchema>(schema: Schema, form: GetForm<Schema>): Promise<Type<any>> {
     if (schema.load) {
       if (typeof schema.load === 'string') {
         if (this.hasKey(schema.load, 'component')) {
@@ -72,7 +71,7 @@ export class FormFactory {
   createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, state?: T): GetForm<Schema> {
     state = this.createState(schema, state);
     if (typeof schema.load === 'string' && this.hasKey(schema.load, 'form')) {
-      return this.factory[schema.load].form(state);
+      return this.factory[schema.load].form(state) as any;
     }
     if (isControlSchema(schema)) {
       return new FormControl(state) as any;
@@ -103,20 +102,20 @@ export class FormFactory {
           throw new Error(`Key ${def} of ${def}[] doesn't exist in factory or no factory provided in FormFactoryModule.forRoot`);
         }
         const factory = this.factory[def].schema();
-        return this.factory['array'].schema<any[]>({ factory });
+        return (this.factory['array'] as FactoryField<any[]>).schema({ factory });
       }
       // Control
       if (!this.hasKey(definition, 'schema')) {
         throw new Error(`Key ${definition} doesn't exist in factory or no factory provided in FormFactoryModule.forRoots`);
       }
-      return this.factory[definition].schema<any>();
+      return this.factory[definition].schema();
     } else if (typeof definition === 'object') {
       const controls = {};
       for (const key in definition) {
         const value = definition[key]
         controls[key] = this.createSchema(value);
       }
-      return this.factory['group'].schema<object>({ controls });
+      return this.factory['group'].schema({ controls });
     } else {
       throw new Error(`Definition should either a string or an object. Got ${definition} instead`)
     }

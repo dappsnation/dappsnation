@@ -5,3 +5,4 @@ export * from './types';
 export * from './form-outlet';
 export * from './service';
 export * from './module';
+export * from './tokens';
