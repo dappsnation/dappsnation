@@ -12,7 +12,7 @@ export interface OptionOutlet<T> {
   selector: '[option] [schema] option-outlet',
 })
 export class OptionOutletDirective<T> {
-  @Input() schema: MatSelectSchema;
+  @Input() schema: MatSelectSchema<T>;
   @Input() option: T;
 
   constructor(

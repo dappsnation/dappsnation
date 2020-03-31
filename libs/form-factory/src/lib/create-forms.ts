@@ -1,4 +1,4 @@
-import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm, FormSchema, GetEntity, FormArraySchema, GetItem } from "./types";
+import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm, FormSchema, GetEntity, FormArraySchema, GetItem, GetStateType } from "./types";
 import { FormEntity, EntityContols } from './entity';
 import { FormList, getFactory } from './list';
 import { createState } from './create-state';
@@ -12,7 +12,7 @@ type GetArrayType<T> = T extends (infer I)[] ? I : never;
  * @param schema Schema of the form
  * @param value The value to initialize the control with
  */
-export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(schema: Schema, value?: T): GetForm<Schema> {
+export function createForms<Schema extends FormSchema, T = GetStateType<Schema>>(schema: Schema, value?: T): GetForm<Schema> {
   if (!value) {
     value = createState(schema, value);
   }

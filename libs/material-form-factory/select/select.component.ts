@@ -9,13 +9,38 @@ import { OptionOutletDirective } from './option-outlet';
 
 @Component({
   selector: 'form-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <form-field [form]="form" [schema]="schema">
+      <mat-select [formControl]="form" [multiple]="schema.multiple" >
+        <!-- Array -->
+        <ng-container *ngIf="isArray(schema.options) else isMap">
+          <mat-option *ngFor="let option of schema.options" [value]="option">
+            <ng-template [ngTemplateOutlet]="display" [ngTemplateOutletContext]="{$implicit: option}"></ng-template>
+          </mat-option>
+        </ng-container>
+        <!-- Object -->
+        <ng-template #isMap>
+          <mat-option *ngFor="let option of schema.options | keyvalue" [value]="option.key">
+            <ng-template [ngTemplateOutlet]="display" [ngTemplateOutletContext]="{$implicit: option.value}"></ng-template>
+          </mat-option>
+        </ng-template>
+      </mat-select>
+    </form-field>
+
+    <!-- For dynamic content -->
+    <ng-template #display let-option>
+      <ng-container *ngIf="schema.optionTemplate else simple">
+        <option-outlet [option]="option" [schema]="schema"></option-outlet>
+      </ng-container>
+      <ng-template #simple>
+        {{ option }}
+      </ng-template>
+    </ng-template>`,
 })
-export class SelectFormComponent implements FormOutlet {
+export class SelectFormComponent<T> implements FormOutlet {
   form: FormControl;
-  schema: MatSelectSchema;
+  schema: MatSelectSchema<T>;
 
   isArray = Array.isArray;
 

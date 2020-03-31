@@ -16,9 +16,9 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./autocomplete.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormAutocompleteComponent implements FormOutlet {
+export class FormAutocompleteComponent<T> implements FormOutlet {
   form: FormControl;
-  schema: MatSelectSchema;
+  schema: MatSelectSchema<T>;
   filteredOptions: Observable<string[]>;
   isArray: boolean;
   constructor() { }
@@ -42,7 +42,7 @@ export class FormAutocompleteComponent implements FormOutlet {
     const filterValue = value.toLowerCase();
     const options = this.schema.options;
     if (this.isArray) {
-      return options.filter(option => option.toLowerCase().includes(filterValue));
+      return (options as any[]).filter(option => option.toLowerCase().includes(filterValue));
     } else {
       return Object.keys(options).filter((key) => options[key].toLowerCase().includes(filterValue));
     }

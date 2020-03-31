@@ -192,6 +192,13 @@
       "sourceRoot": "apps/material-form-factory-e2e/src",
       "projectType": "application",
       "architect": {
+        "build": {
+          "options": {
+            "tsConfig": "apps/material-form-factory-e2e/tsconfig.e2e.json",
+            "assets": [],
+            "styles": ["styles/style.scss"]
+          }
+        },
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
@@ -232,5 +239,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "material-form-factory"
+  "defaultProject": "material-form-factory-e2e"
 }

@@ -1,8 +1,8 @@
 import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray, AsyncValidatorFn } from "@angular/forms";
 import { FormEntity } from './entity';
 import { FormList } from './list';
-import { Type } from '@angular/core';
 import { FormField } from './field';
+import { Type } from '@angular/core';
 
 export type Definition<T extends Factory> = Record<string, keyof T> | keyof T;
 
@@ -35,9 +35,10 @@ export interface FormSchema {
   asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[]
 }
 
+
 export interface FormControlSchema<T = any> extends FormSchema {
   form: 'control',
-  load: string | ((form?: FormControl) => Promise<Type<any>>);
+  load: string | ((form?: FormControl | FormField<T>) => Promise<Type<any>>); // Need to use generic or it's removed by typecript
 }
 
 export interface FormGroupSchema<T = any> extends FormSchema {
@@ -70,13 +71,13 @@ export function isControlSchema(schema: FormSchema): schema is FormControlSchema
   return schema.form === 'control';
 }
 
-// GET TYPE 
+// GET TYPE OF SCHEMA 
 export type GetSchema<T> =
   T extends string ? FormControlSchema<T> :
   T extends number ? FormControlSchema<T> :
   T extends Function ? FormControlSchema :    // TODO: What to do with Functions ?
-  T extends (infer I)[] ? FormArraySchema<I> :
-  T extends object ? FormGroupSchema<T> : never;
+  T extends (infer I)[] ? FormArraySchema<I> :  // TODO: What if we want a FormControlSchema<I[]>
+  T extends object ? FormGroupSchema<T> : never; // TODO: What if we want a FormControlSchema<T>
 
 // GET FORM
 export type GetForm<Schema extends FormSchema> = 
@@ -85,6 +86,12 @@ export type GetForm<Schema extends FormSchema> =
   Schema extends FormControlSchema<infer Y> ? FormField<Y> :
   Schema extends FormSchema ? AbstractControl :
   never;
+
+/** Get type of the state of the schema */
+export type GetStateType<Schema> = 
+  Schema extends FormGroupSchema<infer I> ? I :
+  Schema extends FormArraySchema<infer J> ? J :
+  Schema extends FormControlSchema<infer Y> ? Y : never;
 
 /** Get the entity type of a FormGroupSchema */
 export type GetEntity<T> = T extends FormGroupSchema<infer I> ? I : never;
