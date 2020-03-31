@@ -2,15 +2,19 @@ import { FormControl } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ControlListModule, ControlListComponent } from './control-list.component';
 import { TextFormComponent, TextFormModule, matText } from '../text';
-import { FormList, FormArraySchema, FormFactoryModule, FormFactory } from 'ng-form-factory';
+import { FormList, FormArraySchema, FormFactoryModule, Factory } from 'ng-form-factory';
 
 export default {
   title: 'List Form Component'
 };
 
-const factory: FormFactory = {
-  'text': () => import('../text/text.component').then(c => c.TextFormComponent),
-  'list': () => import('./control-list.component').then(c => c.ControlListComponent),
+const factory: Factory = {
+  'text': {
+    component: () => import('../text/text.component').then(c => c.TextFormComponent),
+  },
+  'list': {
+    component: () => import('./control-list.component').then(c => c.ControlListComponent),
+  }
 }
 
 const schema: FormArraySchema<string> = {

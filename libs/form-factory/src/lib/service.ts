@@ -17,7 +17,7 @@ export class FormFactory {
   }
 
   /**
-   * Create the component associated with the 
+   * Create the component associated with the schema
    * @param schema The schema defining the component
    * @param form The form used to create the component
    */

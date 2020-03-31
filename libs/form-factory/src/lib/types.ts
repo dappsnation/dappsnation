@@ -1,4 +1,4 @@
-import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray } from "@angular/forms";
+import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray, AsyncValidatorFn } from "@angular/forms";
 import { FormEntity } from './entity';
 import { FormList } from './list';
 import { Type } from '@angular/core';
@@ -31,9 +31,10 @@ export interface FormSchema {
   form: 'group' | 'control' | 'array';
   load: string | ((form?: AbstractControl) => Promise<Type<FormOutlet>>)
   validators?: ValidatorFn | ValidatorFn[]
+  asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[]
 }
 
-export interface FormControlSchema extends FormSchema {
+export interface FormControlSchema<T = any> extends FormSchema {
   form: 'control',
   load: string | ((form?: FormControl) => Promise<Type<any>>);
 }
