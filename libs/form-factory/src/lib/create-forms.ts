@@ -1,8 +1,8 @@
 import { FormGroupSchema, isControlSchema, isGroupSchema, isArraySchema, GetForm, FormSchema, GetEntity, FormArraySchema, GetItem } from "./types";
-import { FormControl } from '@angular/forms';
 import { FormEntity, EntityContols } from './entity';
 import { FormList, getFactory } from './list';
 import { createState } from './create-state';
+import { FormField } from './field';
 
 type GetArrayType<T> = T extends (infer I)[] ? I : never;
 
@@ -17,7 +17,7 @@ export function createForms<Schema extends FormSchema, T = GetEntity<Schema>>(sc
     value = createState(schema, value);
   }
   if (isControlSchema(schema)) {
-    return new FormControl(value) as any;
+    return new FormField(schema, value) as any;
   }
   if (isGroupSchema<T>(schema)) {
     const factory = (key: string, content: any) => createForms(schema.controls[key], content);

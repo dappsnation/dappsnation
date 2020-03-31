@@ -1,9 +1,9 @@
 import { Injectable, Inject, Optional, Type } from '@angular/core';
 import { FormSchema, GetEntity, isArraySchema, isGroupSchema, GetForm, isControlSchema, Factory, Definition, FactoryField } from './types';
 import { FormEntity } from './entity';
-import { FormControl } from '@angular/forms';
 import { FormList, getFactory } from './list';
 import { FACTORY } from './tokens';
+import { FormField } from './field';
 
 
 type GetArrayType<T> = T extends (infer I)[] ? I : never;
@@ -74,7 +74,7 @@ export class FormFactory {
       return this.factory[schema.load].form(state) as any;
     }
     if (isControlSchema(schema)) {
-      return new FormControl(state) as any;
+      return new FormField(schema, state) as any;
     }
     if (isGroupSchema<T>(schema)) {
       const factory = (key: string, content: any) => this.createForms(schema.controls[key], content);

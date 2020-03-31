@@ -2,6 +2,7 @@ import { ValidatorFn, FormControl, AbstractControl, FormGroup, FormArray, AsyncV
 import { FormEntity } from './entity';
 import { FormList } from './list';
 import { Type } from '@angular/core';
+import { FormField } from './field';
 
 export type Definition<T extends Factory> = Record<string, keyof T> | keyof T;
 
@@ -71,8 +72,8 @@ export function isControlSchema(schema: FormSchema): schema is FormControlSchema
 
 // GET TYPE 
 export type GetSchema<T> =
-  T extends string ? FormControlSchema :
-  T extends number ? FormControlSchema :
+  T extends string ? FormControlSchema<T> :
+  T extends number ? FormControlSchema<T> :
   T extends Function ? FormControlSchema :    // TODO: What to do with Functions ?
   T extends (infer I)[] ? FormArraySchema<I> :
   T extends object ? FormGroupSchema<T> : never;
@@ -80,8 +81,8 @@ export type GetSchema<T> =
 // GET FORM
 export type GetForm<Schema extends FormSchema> = 
   Schema extends FormGroupSchema<infer I> ? FormEntity<Schema, I> :
-  Schema extends FormArraySchema<infer Y> ? FormList<Schema, Y> :
-  Schema extends FormControlSchema ? FormControl :
+  Schema extends FormArraySchema<infer J> ? FormList<Schema, J> :
+  Schema extends FormControlSchema<infer Y> ? FormField<Y> :
   Schema extends FormSchema ? AbstractControl :
   never;
 
