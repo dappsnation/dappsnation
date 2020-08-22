@@ -1,11 +1,12 @@
-import { Component, NgModule, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, NgModule, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FormOutlet } from 'ng-form-factory';
 import { FormFieldModule } from 'material-form-factory/form-field';
 import { MatSelectSchema } from './select.schema';
 import { OptionOutletDirective } from './option-outlet';
+import { FormField } from 'ng-form-factory/field';
 
 @Component({
   selector: 'form-select',
@@ -39,8 +40,8 @@ import { OptionOutletDirective } from './option-outlet';
     </ng-template>`,
 })
 export class SelectFormComponent<T> implements FormOutlet {
-  form: FormControl;
-  schema: MatSelectSchema<T>;
+  @Input() form: FormField<T>;
+  @Input() schema: MatSelectSchema<T>;
 
   isArray = Array.isArray;
 

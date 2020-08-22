@@ -30,10 +30,44 @@ export function getChildSchema(parent: FormSchema, path: string | number, form?:
   providers:  [{ provide: CONTEXT, useExisting: forwardRef(() => FormOutletDirective) }]
 })
 export class FormOutletDirective {
+  private _form: AbstractControl;
+  private _schema: FormSchema;
+  private _path: string;
   ref: ComponentRef<FormOutlet>;
-  @Input() form: AbstractControl;
-  @Input() schema: FormSchema;
-  @Input() path: string;
+
+  @Input()
+  set form(form: AbstractControl) {
+    this._form = form;
+    if (this.ref?.instance) {
+      this.ref.instance.form = form;
+    }
+  }
+  get form() {
+    return this._form;
+  }
+
+  @Input()
+  set schema(schema: FormSchema) {
+    this._schema = schema;
+    if (this.ref?.instance) {
+      this.ref.instance.schema = schema;
+    }
+  }
+  get schema() {
+    return this._schema;
+  }
+
+  @Input()
+  set path(path: string) {
+    this._path = path;
+    if (this.context) {
+      this.form = this.context.form.get(path);
+      this.schema = getChildSchema(this.context.schema, path, this.form);
+    }
+  }
+  get path() {
+    return this._path;
+  }
 
   constructor(
     @SkipSelf() @Optional() @Inject(CONTEXT) private context: FormOutletDirective,
@@ -44,8 +78,8 @@ export class FormOutletDirective {
   ) {}
 
   async ngOnInit() {
-    if (this.context) {
-      this.form = this.context.form.get(`${this.path}`);
+    if (this.context && this.path) {
+      this.form = this.context.form.get(this.path);
       this.schema = getChildSchema(this.context.schema, this.path, this.form);
     }
     const component = await this.formFactory.createComponent(this.schema, this.form);

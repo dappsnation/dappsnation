@@ -26,7 +26,7 @@ type Countries = keyof typeof countries;
 class Option implements OptionOutlet<Countries> {
   option: Countries;
 }
-const schema_1: MatSelectSchema<Countries> = matSelect({
+const schema_1 = matSelect({
   load: () => import('./select.component').then(c => c.SelectFormComponent),
   label: 'Select a value',
   options: countries,
@@ -63,7 +63,7 @@ export const multiple = () => ({
     imports: [BrowserAnimationsModule, SelectFormModule, FormFactoryModule],
     entryComponents: [SelectFormComponent]
   },
-  template: `<form-outlet [form]="form" [schema]="schema"></form-outlet>`,
+  template: `<form-select [form]="form" [schema]="schema"></form-select>`,
   props: {
     schema: schema_2,
     form: form_2,

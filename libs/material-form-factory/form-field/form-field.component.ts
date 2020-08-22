@@ -1,4 +1,4 @@
-import { Component, NgModule, ChangeDetectionStrategy, Input, ContentChild, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, NgModule, ChangeDetectionStrategy, Input, ContentChild, ViewChild, ChangeDetectorRef, AfterViewInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule, MatFormFieldControl, MatFormField } from '@angular/material/form-field';
 import { MatFormFieldSchema } from './form-field.schema';
@@ -26,7 +26,8 @@ export class FormFieldComponent implements AfterViewInit {
     if (this.beforeViewInit) {
       this.matFormField._control = this.control;
       this.beforeViewInit = false;
-      this.cdr.detectChanges();
+      this.cdr.detectChanges(); // Required for inputs
+      this.cdr.markForCheck();  // Required for select
     }
   }
 }

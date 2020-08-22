@@ -99,4 +99,12 @@ export class FormEntity<Schema extends FormGroupSchema<T>, T = GetEntity<Schema>
       this.removeControl(key as any);
     }
   }
+
+  /** Reset all controls to an initial value */
+  resetValue(value: Partial<T>) {
+    this.clear();
+    for (const key in value) {
+      this.createControl(key, value[key]);
+    }
+  }
 }
